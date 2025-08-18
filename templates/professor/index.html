@@ -1,0 +1,22 @@
+{%extends "_base.html"%}
+{%block conteudo%}
+    
+    <h2>Template</h2>
+    <h5><a href=/pessoa/add>Add</a> </h5>
+    <table border="1">
+        <tr>
+            <th>Formação</th>
+        </tr>
+        
+        {% for professor in Professor %}
+        <tr>
+            <td>{{professor.formacao}}</td>
+
+            <td><a href=/pessoa/{{pessoa.id}}> Detalhe </a> </td>
+            <td><a href=/pessoa/edit/{{pessoa.id}}> Editar </a> </td>
+            <td><a href="/pessoa/remove/{{pessoa.id}}"> Excluir </a> </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+    {% endblock %}
