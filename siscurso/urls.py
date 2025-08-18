@@ -10,6 +10,7 @@ urlpatterns = [
     path('professor/adicionar/', views_professor.add, name="add-professor"),
     path('professor/editar/<int:id_professor>/', views_professor.edit, name="edit-professor"),
     path('professor/remover/<int:id_professor>/', views_professor.remove, name="remove-professor"),
+    path('professor/<int:id_professor>/', views_professor.detalhe, name="detail-professor"),
     path('', views.home, name='home')
     #aluno
     

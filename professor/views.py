@@ -50,7 +50,7 @@ def remove(request, id_pessoa):
     return HttpResponseRedirect('/professor/')
 
 
-def detalhe(request, id_pessoa):
-    professores = Professor.objects.get(id=id_pessoa)
+def detalhe(request, id_professor):
+    professores = Professor.objects.get(id=id_professor)
 
     return render(request, 'professor/detalhe.html', {'professores': professores})
