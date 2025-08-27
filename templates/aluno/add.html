@@ -1,6 +1,10 @@
-<h1>Adicionar Aluno</h1>
+{% extends "_base.html" %}
 
-<!-- Adicione esta seção para debug -->
+
+{% block content %}
+<div class="container">
+<h1 class="mb-">Adicionar Aluno</h1>
+
 {% if form.errors %}
     <div style="color: red;">
         <h3>Erros no formulário:</h3>
@@ -17,8 +21,11 @@
     </div>
 {% endif %}
 
-<form method="post">
+
+<form method="post"  class="mx-auto mt-4" style="max-width: 400px;">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Salvar</button>
+    <button class="btn btn-primary mb-3" type="submit">Salvar</button>
 </form>
+</div>
+{%endblock%}
