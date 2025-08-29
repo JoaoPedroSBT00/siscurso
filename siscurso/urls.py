@@ -10,9 +10,9 @@ urlpatterns = [
     #professor
     path('professor/', views_professor.index, name="index-professor"),
     path('professor/adicionar/', views_professor.add, name="add-professor"),
-    path('professor/editar/<int:id_professor>/', views_professor.edit, name="edit-professor"),
-    path('professor/remover/<int:id_professor>/', views_professor.remove, name="remove-professor"),
-    path('professor/<int:id_professor>/', views_professor.detalhe, name="detail-professor"),
+    path('professor/editar/<int:pk>/', views_professor.edit, name="edit-professor"),
+    path('professor/remover/<int:pk>/', views_professor.remove, name="remove-professor"),
+    path('professor/<int:pk>/', views_professor.detalhe, name="detail-professor"),
     #aluno
     path('aluno/', views_aluno.index, name="index-aluno"),
     path('aluno/adicionar/', views_aluno.add, name="add-aluno"),

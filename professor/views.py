@@ -1,56 +1,86 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
 from .models import Professor
-from .forms import ProfessorForm
+from .forms import ProfessorForm, ProfessorUpdateForm
 
-
-
+# Listar professores
 def index(request):
-
     professores = Professor.objects.all()
+    return render(request, "professor/index.html", {"professores": professores})
 
-    return render(request, 'professor/index.html', {'professores': professores})
-
-
+# Adicionar professor
 def add(request):
+    if request.method == "POST":
+        form = ProfessorForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            curriculo = form.cleaned_data['curriculo']
+            formacao = form.cleaned_data['formacao']
 
-    if request.method == 'POST':
-       form = ProfessorForm(request.POST)
+            user = User.objects.create_user(
+                username=username,
+                password=password,
+                first_name=first_name,
+                last_name=last_name
+            )
 
-       if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/professor/')
+            Professor.objects.create(
+                user=user,
+                curriculo=curriculo,
+                formacao=formacao
+            )
+
+            return redirect("index-professor")
     else:
         form = ProfessorForm()
+    return render(request, "professor/add.html", {"form": form})
 
-    return render(request, 'professor/adicionar.html', { 'form': form})
+# Editar professor
+def edit(request, pk):
+    professor = get_object_or_404(Professor, pk=pk)
+    user = professor.user
 
+    if request.method == "POST":
+        form = ProfessorUpdateForm(request.POST, instance=professor, user_instance=user)
+        if form.is_valid():
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            if form.cleaned_data['password']:
+                user.set_password(form.cleaned_data['password'])
+            user.save()
 
+            professor.curriculo = form.cleaned_data['curriculo']
+            professor.formacao = form.cleaned_data['formacao']
+            professor.save()
 
-def edit(request, id_professor):
-
-    professores = Professor.objects.get(id=id_professor)
-
-    if request.method == 'POST':
-       form = ProfessorForm(request.POST, instance=professores)
-
-       if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/professor/')
+            return redirect("index-professor")
     else:
-        form = ProfessorForm()
+        form = ProfessorUpdateForm(
+            instance=professor,
+            user_instance=user,
+            initial={
+                'username': user.username,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'curriculo': professor.curriculo,
+                'formacao': professor.formacao
+            }
+        )
 
-    return render(request, 'professor/editar.html', {'form': form})
+    return render(request, "professor/edit.html", {"form": form})
 
-def remove(request, id_pessoa):
+# Remover professor
+def remove(request, pk):
+    professor = get_object_or_404(Professor, pk=pk)
+    user = professor.user
+    professor.delete()
+    user.delete()
+    return redirect("index-professor")
 
-    professores = Professor.objects.filter(id=id_pessoa)
-    professores.delete()
 
-    return HttpResponseRedirect('/professor/')
-
-
-def detalhe(request, id_professor):
-    professores = Professor.objects.get(id=id_professor)
-
-    return render(request, 'professor/detalhe.html', {'professores': professores})
+def detalhe(request, pk):
+    professor = get_object_or_404(Professor, pk=pk)
+    return render(request, "professor/detalhe.html", {"professor": professor})

@@ -1,0 +1,6 @@
+<h1>Editar Professor: {{ professor.user.username }}</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar alterações</button>
+</form>

@@ -1,1 +1,18 @@
-{{professor.formacao}}
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Detalhes do Professor</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ professor.user.first_name }} {{ professor.user.last_name }}</h5>
+            <p><strong>Usuário:</strong> {{ professor.user.username }}</p>
+            <p><strong>Currículo:</strong></p>
+            <p>{{ professor.curriculo }}</p>
+            <p><strong>Formação:</strong> {{ professor.formacao }}</p>
+        </div>
+    </div>
+
+
+{% endblock %}

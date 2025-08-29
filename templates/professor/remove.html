@@ -1,0 +1,7 @@
+<h1>Remover Aluno</h1>
+<p>Você tem certeza que deseja remover {{ professor.user.username }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Sim, remover</button>
+    <a href="{% url 'index-professor' %}">Cancelar</a>
+</form>
