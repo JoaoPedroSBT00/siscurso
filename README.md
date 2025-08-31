@@ -2,6 +2,11 @@
 
 Sistema de gerenciamento de cursos desenvolvido em Django.
 
+# Integrantes
+- João Pedro Silva Brito Teixeira
+- Gustavo Roberto Souza Bernardo
+- Maria Fernanda Barbosa Firmo
+
 ## Como rodar o projeto
 
 ### 1. Clone o repositório
