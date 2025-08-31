@@ -2,17 +2,40 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as login_django
+
 
 def home(request):
     return render(request, 'others/home.html')
 
-def registrar(request):
-    if request.method == "POST":
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user) 
-            return redirect("home")
+def cadastro(request):
+    if request.method == 'GET':
+        return render(request, 'cadastro.html')
     else:
-        form = UserCreationForm()
-    return render(request, "registrar.html", {"form": form})
+        username = request.POST.get('username')
+        senha = request.POST.get('senha')
+
+        user = User.objects.create_user(username=username, password=senha)
+        user.save()
+
+        return HttpResponse('Usuario cadastrado com sucesso!')
+
+def login(request):
+    if request.method == 'GET':
+        return render(request, 'login.html')
+        
+    else:
+        username = request.POST.get('username')
+        senha = request.POST.get('senha')
+
+        user = authenticate(username=username, password=senha)
+
+        if user:
+            login_django(request, user)
+            return HttpResponse('autenticado')
+        else:
+            return HttpResponse('email ou senha incorreto')
+

@@ -1,7 +1,5 @@
 from django.contrib import admin
 from django.urls import path
-from .views import registrar
-from django.contrib.auth import views as auth_views
 from professor import views as views_professor
 from aluno import views as views_aluno
 from cursos import views as views_curso
@@ -11,10 +9,9 @@ from . import views
 
 urlpatterns = [   
     path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path("registrar/", registrar, name="registrar"),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('', views.home, name='home'),  
+    path('cadastro/', views.cadastro, name='cadastro'),
+    path('login/', views.login, name='login'),
     #professor
     path('professor/', views_professor.index, name="index-professor"),
     path('professor/adicionar/', views_professor.add, name="add-professor"),

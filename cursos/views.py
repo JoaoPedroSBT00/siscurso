@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Curso
 from .forms import CursoForm
+from django.contrib.auth.decorators import login_required
 
-# Listar cursos
+@login_required
 def index(request):
     cursos = Curso.objects.all()
     return render(request, "cursos/index.html", {"cursos": cursos})
 
-# Adicionar curso
+@login_required
 def add(request):
     if request.method == "POST":
         form = CursoForm(request.POST)
@@ -18,7 +19,7 @@ def add(request):
         form = CursoForm()
     return render(request, "cursos/add.html", {"form": form})
 
-# Editar curso
+@login_required
 def edit(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
     
@@ -32,7 +33,7 @@ def edit(request, pk):
 
     return render(request, "cursos/edit.html", {"form": form})
 
-# Remover curso
+@login_required
 def remove(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
     curso.delete()

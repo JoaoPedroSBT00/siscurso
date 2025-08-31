@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Professor
 from .forms import ProfessorForm, ProfessorUpdateForm
+from django.contrib.auth.decorators import login_required
 
-# Listar professores
+@login_required
 def index(request):
     professores = Professor.objects.all()
     return render(request, "professor/index.html", {"professores": professores})
 
-# Adicionar professor
+@login_required
 def add(request):
     if request.method == "POST":
         form = ProfessorForm(request.POST)
@@ -38,7 +39,7 @@ def add(request):
         form = ProfessorForm()
     return render(request, "professor/add.html", {"form": form})
 
-# Editar professor
+@login_required
 def edit(request, pk):
     professor = get_object_or_404(Professor, pk=pk)
     user = professor.user
@@ -72,7 +73,7 @@ def edit(request, pk):
 
     return render(request, "professor/edit.html", {"form": form})
 
-# Remover professor
+@login_required
 def remove(request, pk):
     professor = get_object_or_404(Professor, pk=pk)
     user = professor.user

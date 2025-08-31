@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Cadastro</title>
 </head>
 <body>
-    <form action="{% url 'login'%}" method="POST"> {% csrf_token %}
+    <form action="{% url 'cadastro'%}" method="POST"> {% csrf_token %}
         <input type="text" placeholder="username" name="username">
         <br> <br>
         <input type="password" placeholder="password" name="senha">
         <br> <br>
-        <input type="submit" value="logar">
-        <a href="/cadastro/">nao tenho conta</a>
+        <input type="submit" value="cadastrar">
+        <a href="/login/">ja tenho conta</a>
     </form>
 </body>
 </html>

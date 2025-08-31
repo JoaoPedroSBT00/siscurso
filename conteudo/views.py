@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Conteudo
 from .forms import ConteudoForm
+from django.contrib.auth.decorators import login_required
 
-# Listar conteudos
+@login_required
 def index(request):
     conteudos = Conteudo.objects.all()
     return render(request, "conteudo/index.html", {"conteudos": conteudos})
 
-# Adicionar conteudo
+@login_required
 def add(request):
     if request.method == "POST":
         form = ConteudoForm(request.POST)
@@ -18,7 +19,7 @@ def add(request):
         form = ConteudoForm()
     return render(request, "conteudo/add.html", {"form": form})
 
-# Editar conteudo
+@login_required
 def edit(request, pk):
     conteudo = get_object_or_404(Conteudo, pk=pk)
     
@@ -32,7 +33,7 @@ def edit(request, pk):
 
     return render(request, "conteudo/edit.html", {"form": form})
 
-# Remover conteudo
+@login_required
 def remove(request, pk):
     conteudo = get_object_or_404(Conteudo, pk=pk)
     conteudo.delete()
