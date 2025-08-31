@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container">
+<h1 class="mb-4">Adicionar Matrícula</h1>
+
+{% if form.errors %}
+    <div style="color: red;">
+        <h3>Erros no formulário:</h3>
+        <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post" class="mx-auto mt-4" style="max-width: 400px;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-primary mb-3" type="submit">Salvar</button>
+</form>
+</div>
+{% endblock %}

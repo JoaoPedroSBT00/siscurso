@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Lista de Matrículas</h1>
+    <a href="{% url 'add-matricula' %}" class="btn btn-primary mb-3">Adicionar Matrícula</a>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Aluno</th>
+                    <th>Curso</th>
+                    <th>Data de Matrícula</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for matricula in matriculas %}
+                <tr>
+                    <td>{{ matricula.aluno.user.get_full_name }} ({{ matricula.aluno.matricula }})</td>
+                    <td>{{ matricula.curso.nome }}</td>
+                    <td>{{ matricula.dt_mat|date:"d/m/Y" }}</td>
+                    <td>
+                        <span class="badge 
+                            {% if matricula.status == 'concluido' %}bg-success
+                            {% elif matricula.status == 'cursando' %}bg-primary
+                            {% elif matricula.status == 'matriculado' %}bg-info
+                            {% elif matricula.status == 'cancelado' %}bg-danger
+                            {% elif matricula.status == 'suspenso' %}bg-warning
+                            {% endif %}">
+                            {{ matricula.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'detail-matricula' matricula.id %}" class="btn btn-sm btn-info">Detalhes</a>
+                        <a href="{% url 'edit-matricula' matricula.id %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'remove-matricula' matricula.id %}" class="btn btn-sm btn-danger">Remover</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">Nenhuma matrícula cadastrada.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
