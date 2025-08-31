@@ -3,14 +3,14 @@ from django.contrib.auth.models import User
 from .models import Aluno
 from .forms import AlunoForm
 from .forms import AlunoUpdateForm
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from .models import Aluno
 from .forms import AlunoForm
 
 
-# Listagem de alunos
+@login_required
 def index(request):
     alunos = Aluno.objects.all()
     return render(request, 'aluno/index.html', {'alunos': alunos})

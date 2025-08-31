@@ -1,6 +1,17 @@
-<h1>Detalhes do Aluno</h1>
-<p><strong>Usuário:</strong> {{ aluno.user.username }}</p>
-<p><strong>Matrícula:</strong> {{ aluno.matricula }}</p>
-<p><strong>Data de Nascimento:</strong> {{ aluno.data_nascimento }}</p>
+{% extends "_base.html" %}
 
-<a href="{% url 'index-aluno' %}">Voltar</a>
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Detalhes do Aluno</h1>
+
+    <div class="card-body">
+        <h5 class="card-title">{{ aluno.user.username }}</h5>
+        <p><strong>Matrícula:</strong> {{ aluno.matricula }}</p>
+        <p><strong>Data de Nascimento:</strong> {{ aluno.data_nascimento }}</p>
+
+        <a href="{% url 'index-aluno' %}">Voltar</a>
+        <br><br>
+    </div>
+</div>
+
+{%endblock%}
