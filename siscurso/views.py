@@ -25,7 +25,7 @@ def cadastro(request):
         user = User.objects.create_user(username=username, password=senha)
         user.save()
 
-        return HttpResponse('Usuario cadastrado com sucesso!')
+        return render(request, 'others/home.html')
 
 def login(request):
     if request.method == 'GET':
@@ -39,7 +39,7 @@ def login(request):
 
         if user:
             login_django(request, user)
-            return HttpResponse('autenticado')
+            return render(request, 'others/home.html')
         else:
             return HttpResponse('email ou senha incorreto')
 
