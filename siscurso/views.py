@@ -18,6 +18,10 @@ def cadastro(request):
         username = request.POST.get('username')
         senha = request.POST.get('senha')
 
+        if User.objects.filter(username=username).exists():
+            return HttpResponse('Usuario ja existe')
+            return redirect("cadastro") 
+
         user = User.objects.create_user(username=username, password=senha)
         user.save()
 
