@@ -9,7 +9,6 @@
                 <tr>
                     <th>Usuário</th>
                     <th>Nome Completo</th>
-                    <th>Currículo</th>
                     <th>Formação</th>
                     <th>Ações</th>
                 </tr>
@@ -19,7 +18,6 @@
                 <tr>
                     <td>{{ professor.user.username }}</td>
                     <td>{{ professor.user.first_name }} {{ professor.user.last_name }}</td>
-                    <td>{{ professor.curriculo }}</td>
                     <td>{{ professor.formacao }}</td>
                     <td>
                         <a href="{% url 'detail-professor' professor.id %}" class="btn btn-sm btn-info">Detalhes</a>

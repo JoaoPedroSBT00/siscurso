@@ -59,12 +59,9 @@ def edit(request, id_aluno):
 @login_required
 def remove(request, id_aluno):
     aluno = get_object_or_404(Aluno, id=id_aluno)
-    if request.method == 'POST':
-        aluno.user.delete()  # remove também o usuário ligado
-        aluno.delete()
-        return redirect('index-aluno')
-    return render(request, 'aluno/remove.html', {'aluno': aluno})
-
+    user = aluno.user
+    user.delete()
+    return redirect('index-aluno')
 
 @login_required
 def detalhe(request, id_aluno):

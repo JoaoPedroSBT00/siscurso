@@ -37,6 +37,32 @@
                     </button>
                 </div>
 
+
+                {% if messages %}
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="w-60" style="padding-left: 30px;">
+                    {% for message in messages %}
+                        <div class="alert alert-dismissible fade show text-center shadow-sm" role="alert">
+                        {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <script>
+                // Fecha o alerta automaticamente depois de 4s
+                setTimeout(function() {
+                    let alerts = document.querySelectorAll('.alert');
+                    alerts.forEach(function(alert) {
+                    let bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                    });
+                }, 4000);
+                </script>
+
+
+
                 <!-- Link cadastro -->
                 <p class="text-center mt-3">
                     Não tem conta?
