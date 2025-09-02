@@ -24,13 +24,22 @@
             <div class="container px-lg-5">
                 <div class="p-4 p-lg-5 bg-light rounded-3 text-center">
                     <div class="m-4 m-lg-5">
-                        <h1 class="display-5 fw-bold">Bem vindo ao Curso AZ</h1>
-                        <p class="fs-4">A melhor plataforma de cursos para voce que deseja se tornar um profissional qualificado no mercado brasileiro e internacional!</p>
-                        <a class="btn btn-primary btn-lg" href="/login">Fazer Login</a>
+                        {% if user.is_authenticated %}
+                            <h1 class="display-5 fw-bold">Bem-vindo, {{ user.username }}!</h1>
+                                {% csrf_token %}
+                            </form>
+                        {% else %}
+                            <h1 class="display-5 fw-bold">Bem-vindo ao Curso AZ</h1>
+                            <p class="fs-4">
+                                A melhor plataforma de cursos para você que deseja se tornar um
+                                profissional qualificado no mercado brasileiro e internacional!
+                            </p>
+                            <a class="btn btn-primary btn-lg" href="/login">Fazer Login</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </header>
+        </header>        
         {%endblock%}
 
         <!-- Page Content-->

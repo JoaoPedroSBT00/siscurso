@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import authenticate
@@ -25,7 +25,7 @@ def cadastro(request):
         user = User.objects.create_user(username=username, password=senha)
         user.save()
 
-        return render(request, 'others/home.html')
+        return render(request, 'login.html')
 
 def login(request):
     if request.method == 'GET':
@@ -42,4 +42,8 @@ def login(request):
             return render(request, 'others/home.html')
         else:
             return HttpResponse('email ou senha incorreto')
+        
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 

@@ -22,7 +22,6 @@ def add(request):
             # Criar usuário
             user = User.objects.create_user(
                 username=form.cleaned_data['username'],
-                password=form.cleaned_data['password'],
                 first_name=form.cleaned_data['first_name'],
                 last_name=form.cleaned_data['last_name']
             )
@@ -46,10 +45,6 @@ def edit(request, id_aluno):
             user = aluno.user
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
-            
-            if form.cleaned_data['password']:  # se o aluno digitou senha nova
-                user.set_password(form.cleaned_data['password'])
-            
             user.save()
             aluno.save()
             return redirect('index-aluno')
@@ -75,22 +70,3 @@ def remove(request, id_aluno):
 def detalhe(request, id_aluno):
     aluno = get_object_or_404(Aluno, id=id_aluno)
     return render(request, 'aluno/detail.html', {'aluno': aluno})
-
-
-def criar_aluno(request):
-    if request.method == 'POST':
-        form = AlunoForm(request.POST)
-        if form.is_valid():
-            user = User.objects.create_user(
-                username = request.POST['username'],
-                password = request.POST['password'],
-                first_name = request.POST['first_name'],
-                last_name = request.POST['last_name'],
-            )
-            aluno = form.save(commit=False)
-            aluno.user = user
-            aluno.save()
-            return redirect('home')
-    else:
-        form = AlunoForm()
-    return render(request, 'criar_aluno.html', {form:form})
