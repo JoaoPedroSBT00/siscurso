@@ -39,15 +39,13 @@
 
 
                 {% if messages %}
-                <div class="d-flex justify-content-center mt-3">
                     <div class="w-60" style="padding-left: 30px;">
                     {% for message in messages %}
-                        <div class="alert alert-dismissible fade show text-center shadow-sm" role="alert">
+                        <div class="alert alert-dismissible show text-center " role="alert">
                         {{ message }}
                         </div>
                     {% endfor %}
                     </div>
-                </div>
                 {% endif %}
 
                 <script>
