@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Curso
 from .forms import CursoForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 
 @login_required
+@permission_required('cursos.view_curso', raise_exception=True)
 def index(request):
     cursos = Curso.objects.all()
     return render(request, "cursos/index.html", {"cursos": cursos})
 
 @login_required
+@permission_required('cursos.add_curso', raise_exception=True)
 def add(request):
     if request.method == "POST":
         form = CursoForm(request.POST)
@@ -20,6 +22,7 @@ def add(request):
     return render(request, "cursos/add.html", {"form": form})
 
 @login_required
+@permission_required('cursos.change_curso', raise_exception=True)
 def edit(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
     
@@ -34,11 +37,14 @@ def edit(request, pk):
     return render(request, "cursos/edit.html", {"form": form})
 
 @login_required
+@permission_required('cursos.delete_curso', raise_exception=True)
 def remove(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
     curso.delete()
     return redirect("index-curso")
 
+@login_required
+@permission_required('cursos.view_curso', raise_exception=True)
 def detalhe(request, pk):
     curso = get_object_or_404(Curso, pk=pk)
     return render(request, "cursos/detalhe.html", {"curso": curso})
