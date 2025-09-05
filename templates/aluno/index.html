@@ -1,6 +1,5 @@
 {% extends "_base.html" %}
 
-
 {% block content %}
 <br>
 <div class="container">
@@ -22,8 +21,8 @@
             <tbody>
                 {% for aluno in alunos %}
                     <tr>
-                        <td>{{ aluno.user.username }}</td>
-                        <td>{{ aluno.user.first_name }} {{ aluno.user.last_name }}</td>
+                        <td>{{ aluno.username }}</td>
+                        <td>{{ aluno.get_full_name }}</td>  <!-- Usando método do User -->
                         <td>{{ aluno.matricula }}</td>
                         <td>{{ aluno.data_nascimento }}</td>
                         <td>
@@ -42,4 +41,4 @@
         <br><br><br>
     </div>
 </div>
-{% endblock %}
+{% endblock %}/

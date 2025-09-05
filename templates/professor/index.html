@@ -16,8 +16,8 @@
             <tbody>
                 {% for professor in professores %}
                 <tr>
-                    <td>{{ professor.user.username }}</td>
-                    <td>{{ professor.user.first_name }} {{ professor.user.last_name }}</td>
+                    <td>{{ professor.username }}</td>
+                    <td>{{ professor.get_full_name }}</td>  <!-- Usando método do User -->
                     <td>{{ professor.formacao }}</td>
                     <td>
                         <a href="{% url 'detail-professor' professor.id %}" class="btn btn-sm btn-info">Detalhes</a>
@@ -27,7 +27,7 @@
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5" class="text-center">Nenhum professor cadastrado.</td>
+                    <td colspan="4" class="text-center">Nenhum professor cadastrado.</td>
                 </tr>
                 {% endfor %}
             </tbody>

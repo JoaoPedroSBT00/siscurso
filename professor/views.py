@@ -14,26 +14,13 @@ def add(request):
     if request.method == "POST":
         form = ProfessorForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            curriculo = form.cleaned_data['curriculo']
-            formacao = form.cleaned_data['formacao']
-
-            user = User.objects.create_user(
-                username=username,
-                password=password,
-                first_name=first_name,
-                last_name=last_name
-            )
-
-            Professor.objects.create(
-                user=user,
-                curriculo=curriculo,
-                formacao=formacao
-            )
-
+            professor = form.save(commit=False)
+            
+            password = form.cleaned_data.get('password')
+            if password:
+                professor.set_password(password)
+            
+            professor.save()
             return redirect("index-professor")
     else:
         form = ProfessorForm()
@@ -42,45 +29,25 @@ def add(request):
 @login_required
 def edit(request, pk):
     professor = get_object_or_404(Professor, pk=pk)
-    user = professor.user
 
     if request.method == "POST":
-        form = ProfessorUpdateForm(request.POST, instance=professor, user_instance=user)
+        form = ProfessorUpdateForm(request.POST, instance=professor)
         if form.is_valid():
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            if form.cleaned_data['password']:
-                user.set_password(form.cleaned_data['password'])
-            user.save()
-
-            professor.curriculo = form.cleaned_data['curriculo']
-            professor.formacao = form.cleaned_data['formacao']
-            professor.save()
-
+            password = form.cleaned_data.get('password')
+            if password:
+                professor.set_password(password)
+            form.save()
             return redirect("index-professor")
     else:
-        form = ProfessorUpdateForm(
-            instance=professor,
-            user_instance=user,
-            initial={
-                'username': user.username,
-                'first_name': user.first_name,
-                'last_name': user.last_name,
-                'curriculo': professor.curriculo,
-                'formacao': professor.formacao
-            }
-        )
-
+        form = ProfessorUpdateForm(instance=professor)
+    
     return render(request, "professor/edit.html", {"form": form})
 
 @login_required
 def remove(request, pk):
     professor = get_object_or_404(Professor, pk=pk)
-    user = professor.user
-    professor.delete()
-    user.delete()
+    professor.delete() 
     return redirect("index-professor")
-
 
 def detalhe(request, pk):
     professor = get_object_or_404(Professor, pk=pk)

@@ -4,7 +4,6 @@ from .forms import AlunoCursoForm
 from django.contrib.auth.decorators import login_required
 
 @login_required
-@permission_required('aluno_curso.view_curso'...)
 def index(request):
     matriculas = AlunoCurso.objects.all()
     return render(request, "aluno_curso/index.html", {"matriculas": matriculas})
