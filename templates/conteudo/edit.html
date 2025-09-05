@@ -1,29 +1,97 @@
 {% extends "_base.html" %}
 
 {% block content %}
-<div class="container">
-<h1 class="mb-4">Editar Conteúdo</h1>
+<style>
+    .form-container {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 40px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        font-family: Arial, sans-serif;
+    }
+    .form-container h1 {
+        font-size: 26px;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 25px;
+        color: #333;
+    }
+    .form-container label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 6px;
+        color: #444;
+    }
+    .form-container input[type="text"],
+    .form-container input[type="password"],
+    .form-container textarea,
+    .form-container input[type="email"],
+    .form-container select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 18px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 15px;
+        transition: 0.3s;
+    }
+    .form-container input:focus,
+    .form-container textarea:focus,
+    .form-container select:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 6px rgba(0,123,255,0.3);
+    }
+    .form-container button {
+        width: 100%;
+        padding: 14px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 8px;
+        border: none;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .form-container button:hover {
+        background: #0056b3;
+    }
+    .form-errors {
+        border: 1px solid #e74c3c;
+        background: #fdecea;
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 20px;
+        color: #c0392b;
+    }
+</style>
 
-{% if form.errors %}
-    <div style="color: red;">
-        <h3>Erros no formulário:</h3>
-        <ul>
-            {% for field in form %}
-                {% for error in field.errors %}
-                    <li>{{ field.label }}: {{ error }}</li>
+<div class="form-container">
+    <h1>Editar Conteúdo</h1>
+
+    {% if form.errors %}
+        <div class="form-errors">
+            <h3>Erros no formulário:</h3>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-{% endif %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
 
-<form method="post" class="mx-auto mt-4" style="max-width: 400px;">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-primary mb-3" type="submit">Salvar</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Salvar</button>
+    </form>
 </div>
 {% endblock %}
