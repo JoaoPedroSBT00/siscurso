@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 
+
 @login_required
 @permission_required('professor.view_professor', raise_exception=True)
 def index(request):

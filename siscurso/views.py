@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as login_django
 from django.contrib import messages
+from django.shortcuts import redirect
+
 
 
 def home(request):
@@ -50,3 +52,4 @@ def logout_view(request):
     logout(request)
     messages.info(request, "Você saiu da sua conta.")
     return redirect('login')
+
