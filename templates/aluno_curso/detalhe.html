@@ -9,7 +9,7 @@
             <h5 class="card-title">{{ matricula.aluno.user.get_full_name }}</h5>
             <p><strong>Matrícula do Aluno:</strong> {{ matricula.aluno.matricula }}</p>
             <p><strong>Curso:</strong> {{ matricula.curso.nome }}</p>
-            <p><strong>Professor:</strong> {{ matricula.curso.professor.user.get_full_name }}</p>
+            <p><strong>Professor:</strong> {{ matricula.curso.professor.get_full_name }}</p>
             <p><strong>Carga Horária:</strong> {{ matricula.curso.ch }}h</p>
             <p><strong>Data de Matrícula:</strong> {{ matricula.dt_mat|date:"d/m/Y" }}</p>
             <p><strong>Status:</strong> 
