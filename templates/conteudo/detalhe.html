@@ -12,7 +12,13 @@
             <p><strong>Descrição:</strong></p>
             <p>{{ conteudo.desc }}</p>
             <p><strong>Material de Apoio:</strong></p>
-            <p>{{ conteudo.m_apoio }}</p>
+            {% if conteudo.m_apoio %}
+                <a href="{{conteudo.m_apoio.url}}" download class="btn btn-primary">
+                    baixar / abrir Material
+                </a>
+            {% else %}
+                <p>Nenhum material disponivel.</p>
+            {% endif %}
         </div>
     </div>
 

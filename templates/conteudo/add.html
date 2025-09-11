@@ -28,7 +28,8 @@
     .form-container input[type="password"],
     .form-container textarea,
     .form-container input[type="email"],
-    .form-container select {
+    .form-container select,
+    .form-container input[type="file"] {
         width: 100%;
         padding: 12px;
         margin-bottom: 18px;
@@ -88,7 +89,8 @@
         </div>
     {% endif %}
 
-    <form method="post">
+    <!-- 🚨 Aqui é onde ajustamos -->
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Salvar</button>

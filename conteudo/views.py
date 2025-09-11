@@ -13,23 +13,30 @@ def index(request):
 @permission_required('conteudo.add_conteudo', raise_exception=True)
 def add(request):
     if request.method == "POST":
-        form = ConteudoForm(request.POST)
+        form = ConteudoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            conteudo = form.save(commit=False)
+            if "m_apoio" in request.FILES:
+                conteudo.m_apoio = request.FILES["m_apoio"].read()  # <- converte para bytes
+            conteudo.save()
             return redirect("index-conteudo")
     else:
         form = ConteudoForm()
     return render(request, "conteudo/add.html", {"form": form})
 
+
 @login_required
 @permission_required('conteudo.change_conteudo', raise_exception=True)
 def edit(request, pk):
     conteudo = get_object_or_404(Conteudo, pk=pk)
-    
+
     if request.method == "POST":
-        form = ConteudoForm(request.POST, instance=conteudo)
+        form = ConteudoForm(request.POST, request.FILES, instance=conteudo)
         if form.is_valid():
-            form.save()
+            conteudo = form.save(commit=False)
+            if "m_apoio" in request.FILES:
+                conteudo.m_apoio = request.FILES["m_apoio"].read()
+            conteudo.save()
             return redirect("index-conteudo")
     else:
         form = ConteudoForm(instance=conteudo)

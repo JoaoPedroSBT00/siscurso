@@ -6,6 +6,8 @@ from cursos import views as views_curso
 from conteudo import views as views_conteudo
 from aluno_curso import views as views_matricula
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [   
     path('admin/', admin.site.urls),
@@ -43,4 +45,9 @@ urlpatterns = [
     path('matricula/editar/<int:pk>/', views_matricula.edit, name="edit-matricula"),
     path('matricula/remover/<int:pk>/', views_matricula.remove, name="remove-matricula"),
     path('matricula/<int:pk>/', views_matricula.detalhe, name="detail-matricula"),
-]
+    
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
