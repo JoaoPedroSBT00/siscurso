@@ -46,3 +46,7 @@ python manage.py createsuperuser
 ```bash
 python manage.py runserver
 ```
+
+## Vídeo 
+
+https://youtu.be/wXCvZLkFD1E?si=LVkou1N0hROSjOW-
