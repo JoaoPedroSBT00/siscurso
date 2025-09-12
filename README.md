@@ -1,6 +1,6 @@
 # SisCurso
 
-Sistema de gerenciamento de cursos desenvolvido em Django.
+Sistema de cursos online desenvolvido em Django.
 
 # Integrantes
 - João Pedro Silva Brito Teixeira
